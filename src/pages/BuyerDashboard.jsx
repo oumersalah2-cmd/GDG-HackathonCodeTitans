@@ -13,8 +13,11 @@ export default function BuyerDashboard() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
         <div>
+          <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-1">Dashboard</p>
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Buyer Dashboard</h1>
-          <p className="text-slate-500 mt-1">{user.businessName} • {user.subCity}</p>
+          <p className="text-slate-500 mt-1">
+            {user.businessName || user.name}{user.subCity ? ` • ${user.subCity}` : ''}
+          </p>
         </div>
         <Link 
           to="/marketplace"
@@ -60,7 +63,7 @@ export default function BuyerDashboard() {
             <div className="overflow-hidden h-2.5 mb-2 flex rounded-full bg-slate-100">
               <div style={{ width: "45%" }} className="rounded-full bg-gradient-to-r from-primary-500 to-emerald-500 transition-all duration-500"></div>
             </div>
-            <p className="text-sm text-slate-500">45% of {user.volume}</p>
+            <p className="text-sm text-slate-500">45% of {user.volume || 'your target'}</p>
           </div>
         </div>
       </div>
@@ -108,7 +111,6 @@ export default function BuyerDashboard() {
                     </td>
                     <td className="p-4">
                       <p className="font-semibold text-slate-900">{order.cropType}</p>
-                      <p className="text-xs text-slate-500">From Farmer ID: {order.farmerId}</p>
                     </td>
                     <td className="p-4 text-slate-700 font-medium">{order.quantity} kg</td>
                     <td className="p-4 font-bold text-slate-900">{order.totalPrice.toLocaleString()} ETB</td>

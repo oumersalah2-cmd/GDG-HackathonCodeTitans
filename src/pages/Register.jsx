@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import { Sprout, Store, MapPin, Phone, User, Briefcase, Building, Leaf, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Sprout, Store, MapPin, Phone, User, Briefcase, Building, Leaf, ArrowRight, CheckCircle2, Lock } from 'lucide-react';
 
 export default function Register() {
   const navigate = useNavigate();
   const { login } = useAppContext();
   const [searchParams] = useSearchParams();
   
-  const [role, setRole] = useState('farmer'); // 'farmer' or 'buyer'
+  const [role, setRole] = useState('farmer');
   
   // Common
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
   
   // Farmer specific
   const [region, setRegion] = useState('Oromia');
@@ -29,7 +30,6 @@ export default function Register() {
   const handleRegister = (e) => {
     e.preventDefault();
     
-    // Create mock user object based on role
     const newUser = {
       id: Date.now(),
       role,
@@ -49,7 +49,6 @@ export default function Register() {
       })
     };
 
-    // Save to global users list
     const existingUsers = JSON.parse(localStorage.getItem('agri_users') || '[]');
     localStorage.setItem('agri_users', JSON.stringify([...existingUsers, newUser]));
 
@@ -99,34 +98,24 @@ export default function Register() {
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-1.5">Full Name</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <User className="h-5 w-5" />
-                </div>
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all"
-                  placeholder="Abebe Bikila"
-                />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400"><User className="h-5 w-5" /></div>
+                <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all" placeholder="Abebe Bikila" />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-1.5">Phone Number</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Phone className="h-5 w-5" />
-                </div>
-                <input
-                  type="tel"
-                  required
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all"
-                  placeholder="0911234567"
-                />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400"><Phone className="h-5 w-5" /></div>
+                <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all" placeholder="0911234567" />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400"><Lock className="h-5 w-5" /></div>
+                <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all" placeholder="••••••••" />
               </div>
             </div>
 
@@ -135,62 +124,26 @@ export default function Register() {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Region</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                      <MapPin className="h-5 w-5" />
-                    </div>
-                    <select
-                      value={region}
-                      onChange={(e) => setRegion(e.target.value)}
-                      className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-all appearance-none"
-                    >
-                      <option>Addis Ababa</option>
-                      <option>Amhara</option>
-                      <option>Oromia</option>
-                      <option>SNNPR</option>
-                      <option>Tigray</option>
-                      <option>Sidama</option>
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400"><MapPin className="h-5 w-5" /></div>
+                    <select value={region} onChange={(e) => setRegion(e.target.value)} className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-all appearance-none">
+                      <option>Addis Ababa</option><option>Amhara</option><option>Oromia</option><option>SNNPR</option><option>Tigray</option><option>Sidama</option>
                     </select>
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Preferred Crop Types</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                      <Leaf className="h-5 w-5" />
-                    </div>
-                    <input
-                      type="text"
-                      required
-                      value={cropTypes}
-                      onChange={(e) => setCropTypes(e.target.value)}
-                      className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all"
-                      placeholder="e.g. Teff, Coffee, Wheat"
-                    />
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400"><Leaf className="h-5 w-5" /></div>
+                    <input type="text" required value={cropTypes} onChange={(e) => setCropTypes(e.target.value)} className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all" placeholder="e.g. Teff, Coffee, Wheat" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                    Referral Code <span className="text-slate-400 font-normal">(Optional)</span>
-                  </label>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Referral Code <span className="text-slate-400 font-normal">(Optional)</span></label>
                   <div className="relative">
-                    <input
-                      type="text"
-                      value={referredBy}
-                      onChange={(e) => setReferredBy(e.target.value)}
-                      className={`block w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all ${
-                        referredBy ? 'border-primary-300 bg-primary-50/50' : 'border-slate-200'
-                      }`}
-                      placeholder="e.g. FARM-1234"
-                    />
-                    {referredBy && (
-                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                        <CheckCircle2 className="h-5 w-5 text-primary-500" />
-                      </div>
-                    )}
+                    <input type="text" value={referredBy} onChange={(e) => setReferredBy(e.target.value)} className={`block w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all ${referredBy ? 'border-primary-300 bg-primary-50/50' : 'border-slate-200'}`} placeholder="e.g. FARM-1234" />
+                    {referredBy && <div className="absolute inset-y-0 right-0 pr-3 flex items-center"><CheckCircle2 className="h-5 w-5 text-primary-500" /></div>}
                   </div>
-                  {referredBy && (
-                    <p className="text-xs text-primary-600 mt-1 font-medium">✨ Great! You were referred by {referredBy}</p>
-                  )}
+                  {referredBy && <p className="text-xs text-primary-600 mt-1 font-medium">✨ Great! You were referred by {referredBy}</p>}
                 </div>
               </>
             ) : (
@@ -198,67 +151,34 @@ export default function Register() {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Business Name</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                      <Briefcase className="h-5 w-5" />
-                    </div>
-                    <input
-                      type="text"
-                      required
-                      value={businessName}
-                      onChange={(e) => setBusinessName(e.target.value)}
-                      className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all"
-                      placeholder="Bikila Groceries"
-                    />
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400"><Briefcase className="h-5 w-5" /></div>
+                    <input type="text" required value={businessName} onChange={(e) => setBusinessName(e.target.value)} className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all" placeholder="Bikila Groceries" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Sub-City</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                      <Building className="h-5 w-5" />
-                    </div>
-                    <select
-                      value={subCity}
-                      onChange={(e) => setSubCity(e.target.value)}
-                      className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-all appearance-none"
-                    >
-                      <option value="">Select Sub-city</option>
-                      <option>Bole</option>
-                      <option>Kirkos</option>
-                      <option>Yeka</option>
-                      <option>Lideta</option>
-                      <option>Nifas Silk-Lafto</option>
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400"><Building className="h-5 w-5" /></div>
+                    <select value={subCity} onChange={(e) => setSubCity(e.target.value)} className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-all appearance-none">
+                      <option value="">Select Sub-city</option><option>Bole</option><option>Kirkos</option><option>Yeka</option><option>Lideta</option><option>Nifas Silk-Lafto</option>
                     </select>
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Monthly Volume Needed</label>
-                  <input
-                    type="text"
-                    required
-                    value={volume}
-                    onChange={(e) => setVolume(e.target.value)}
-                    className="block w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all"
-                    placeholder="e.g. 500 kg"
-                  />
+                  <input type="text" required value={volume} onChange={(e) => setVolume(e.target.value)} className="block w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 placeholder-slate-400 transition-all" placeholder="e.g. 500 kg" />
                 </div>
               </>
             )}
 
-            <button
-              type="submit"
-              className="w-full py-3.5 px-4 bg-gradient-to-r from-primary-600 to-emerald-600 text-white rounded-xl font-bold text-base hover:shadow-xl hover:shadow-primary-500/20 hover:-translate-y-0.5 transition-all mt-6 flex items-center justify-center gap-2"
-            >
-              Create Account
-              <ArrowRight className="h-5 w-5" />
+            <button type="submit" className="w-full py-3.5 px-4 bg-gradient-to-r from-primary-600 to-emerald-600 text-white rounded-xl font-bold text-base hover:shadow-xl hover:shadow-primary-500/20 hover:-translate-y-0.5 transition-all mt-6 flex items-center justify-center gap-2">
+              Create Account <ArrowRight className="h-5 w-5" />
             </button>
           </form>
 
           <p className="mt-6 text-center text-sm text-slate-500">
             Already have an account?{' '}
-            <Link to="/login" className="font-semibold text-primary-600 hover:text-primary-700 transition-colors">
-              Log in here
-            </Link>
+            <Link to="/login" className="font-semibold text-primary-600 hover:text-primary-700 transition-colors">Log in here</Link>
           </p>
         </div>
       </div>

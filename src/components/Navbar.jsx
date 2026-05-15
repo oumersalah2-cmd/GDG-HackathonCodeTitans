@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Sprout, LogOut, LayoutDashboard, Store, Menu, X, User } from 'lucide-react';
+import { Sprout, LogOut, LayoutDashboard, Store, Menu, X, User, Brain, ShoppingBag, Leaf } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 export default function Navbar() {
@@ -17,19 +17,9 @@ export default function Navbar() {
 
   const isActive = (path) => location.pathname === path;
 
-  const scrollToImpact = (e) => {
-    setMobileOpen(false);
-    if (location.pathname !== '/') {
-      navigate('/');
-      // Small delay to allow navigation, then scroll
-      setTimeout(() => {
-        document.getElementById('impact')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      e.preventDefault();
-      document.getElementById('impact')?.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const navLinkClass = (path) => `px-4 py-2 rounded-xl font-medium text-sm flex items-center gap-1.5 transition-all ${
+    isActive(path) ? 'bg-primary-50 text-primary-700' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50'
+  }`;
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
@@ -49,37 +39,32 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-1">
-            <a 
-              href="#impact"
-              onClick={scrollToImpact}
-              className="px-4 py-2 rounded-xl font-medium text-sm text-slate-600 hover:text-primary-600 hover:bg-slate-50 transition-all cursor-pointer"
-            >
-              Our Impact
-            </a>
+            {/* Products - visible to everyone */}
+            <Link to="/products" className={navLinkClass('/products')}>
+              <Leaf className="h-4 w-4" />
+              Products
+            </Link>
 
             {user ? (
               <>
+                {/* AI Assistant - farmers only */}
+                {user.role === 'farmer' && (
+                  <Link to="/ai" className={navLinkClass('/ai')}>
+                    <Brain className="h-4 w-4" />
+                    AI Assistant
+                  </Link>
+                )}
+
+                {/* Marketplace - buyers only */}
                 {user.role === 'buyer' && (
-                  <Link 
-                    to="/marketplace" 
-                    className={`px-4 py-2 rounded-xl font-medium text-sm flex items-center gap-1.5 transition-all ${
-                      isActive('/marketplace') 
-                        ? 'bg-primary-50 text-primary-700' 
-                        : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50'
-                    }`}
-                  >
+                  <Link to="/marketplace" className={navLinkClass('/marketplace')}>
                     <Store className="h-4 w-4" />
                     Marketplace
                   </Link>
                 )}
-                <Link 
-                  to={user.role === 'farmer' ? '/farmer' : '/buyer'} 
-                  className={`px-4 py-2 rounded-xl font-medium text-sm flex items-center gap-1.5 transition-all ${
-                    isActive('/farmer') || isActive('/buyer')
-                      ? 'bg-primary-50 text-primary-700' 
-                      : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50'
-                  }`}
-                >
+
+                {/* Dashboard */}
+                <Link to={user.role === 'farmer' ? '/farmer' : '/buyer'} className={navLinkClass(user.role === 'farmer' ? '/farmer' : '/buyer')}>
                   <LayoutDashboard className="h-4 w-4" />
                   Dashboard
                 </Link>
@@ -133,11 +118,17 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="md:hidden bg-white border-t border-slate-200 shadow-xl">
           <div className="px-4 py-4 space-y-1">
-            <a href="#impact" onClick={scrollToImpact} className="flex items-center gap-2 px-4 py-3 text-slate-700 hover:bg-slate-50 rounded-xl font-medium cursor-pointer">
-              Our Impact
-            </a>
+            <Link to="/products" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 px-4 py-3 text-slate-700 hover:bg-slate-50 rounded-xl font-medium">
+              <Leaf className="h-5 w-5 text-slate-400" /> Products
+            </Link>
+
             {user ? (
               <>
+                {user.role === 'farmer' && (
+                  <Link to="/ai" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 px-4 py-3 text-slate-700 hover:bg-slate-50 rounded-xl font-medium">
+                    <Brain className="h-5 w-5 text-slate-400" /> AI Assistant
+                  </Link>
+                )}
                 {user.role === 'buyer' && (
                   <Link to="/marketplace" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 px-4 py-3 text-slate-700 hover:bg-slate-50 rounded-xl font-medium">
                     <Store className="h-5 w-5 text-slate-400" /> Marketplace

@@ -1,11 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import FarmerDashboard from './pages/FarmerDashboard';
 import BuyerDashboard from './pages/BuyerDashboard';
 import Marketplace from './pages/Marketplace';
+import Products from './pages/Products';
+import AIAssistant from './pages/AIAssistant';
 import { useAppContext } from './context/AppContext';
 
 // Protected Route Component
@@ -36,6 +39,16 @@ function App() {
           <Route path="/login" element={!user ? <Login /> : <Navigate to={user.role === 'farmer' ? '/farmer' : '/buyer'} />} />
           <Route path="/register" element={!user ? <Register /> : <Navigate to={user.role === 'farmer' ? '/farmer' : '/buyer'} />} />
           
+          {/* Public pages */}
+          <Route path="/products" element={<Products />} />
+          
+          {/* AI Assistant - farmer only */}
+          <Route path="/ai" element={
+            <ProtectedRoute allowedRoles={['farmer']}>
+              <AIAssistant />
+            </ProtectedRoute>
+          } />
+          
           {/* Marketplace for buyers */}
           <Route path="/marketplace" element={
             <ProtectedRoute allowedRoles={['buyer']}>
@@ -58,6 +71,8 @@ function App() {
           } />
         </Routes>
       </main>
+
+      <Footer />
     </div>
   );
 }

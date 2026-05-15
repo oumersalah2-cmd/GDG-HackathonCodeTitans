@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { Search, Filter, Sparkles, MapPin, ChevronRight, Check, Brain, Star, Package } from 'lucide-react';
+import { Search, MapPin, Check, Star, Package, ArrowRight } from 'lucide-react';
 
 export default function Marketplace() {
   const { user, listings, placeOrder } = useAppContext();
@@ -24,13 +24,6 @@ export default function Marketplace() {
       return matchesType && matchesSearch;
     });
   }, [activeListings, filterType, searchQuery]);
-
-  // Mock Smart Match
-  const smartMatches = useMemo(() => {
-    return [...activeListings]
-      .sort((a, b) => a.pricePerKg - b.pricePerKg)
-      .slice(0, 3);
-  }, [activeListings]);
 
   const handlePlaceOrder = (e) => {
     e.preventDefault();
@@ -70,58 +63,7 @@ export default function Marketplace() {
         </div>
       </div>
 
-      {/* AI Smart Match Section */}
-      <div className="mb-12">
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-9 h-9 bg-gradient-to-br from-violet-600 to-purple-700 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20">
-            <Brain className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-              AI Smart Matches
-              <Sparkles className="h-4 w-4 text-violet-500" />
-            </h2>
-            <p className="text-xs text-slate-500">Best deals curated by AI based on your preferences</p>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {smartMatches.map((listing, idx) => (
-            <div key={`smart-${listing.id}`} className="bg-gradient-to-b from-violet-50/50 to-white rounded-2xl border border-violet-100 p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
-              {idx === 0 && (
-                <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-sm flex items-center gap-1">
-                  <Star className="h-3 w-3 fill-current" /> Best Deal
-                </div>
-              )}
-              <div className="flex justify-between items-start mb-4 mt-1">
-                <div className="flex items-center gap-3">
-                  <img src={listing.image} alt={listing.cropType} className="w-14 h-14 rounded-xl object-cover border-2 border-white shadow-sm group-hover:scale-105 transition-transform" />
-                  <div>
-                    <h3 className="font-bold text-slate-900">{listing.cropType}</h3>
-                    <p className="text-xs text-slate-500 flex items-center gap-1">
-                      <MapPin className="h-3 w-3" /> {listing.location}
-                    </p>
-                  </div>
-                </div>
-                <div className="bg-white px-3 py-1.5 rounded-lg text-primary-700 font-bold text-sm shadow-sm border border-primary-100">
-                  {listing.pricePerKg} ETB
-                </div>
-              </div>
-              <div className="text-sm text-slate-600 mb-4 space-y-1">
-                <p>Farmer: <span className="font-medium text-slate-900">{listing.farmerName}</span></p>
-                <p>Available: <span className="font-medium text-slate-900">{listing.quantity} kg</span></p>
-              </div>
-              <button 
-                onClick={() => setSelectedListing(listing)}
-                className="w-full py-2.5 bg-gradient-to-r from-primary-600 to-emerald-600 text-white rounded-xl font-semibold text-sm hover:shadow-lg hover:shadow-primary-500/20 transition-all flex justify-center items-center gap-2"
-              >
-                Place Order <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Browse Section */}
+      {/* Search & Filter */}
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="relative flex-grow">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
@@ -222,43 +164,22 @@ export default function Marketplace() {
 
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">Quantity (kg) <span className="text-slate-400 font-normal">Max: {selectedListing.quantity}</span></label>
-                    <input 
-                      type="number" 
-                      required 
-                      max={selectedListing.quantity}
-                      value={orderQuantity} 
-                      onChange={e => setOrderQuantity(e.target.value)} 
-                      className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-all" 
-                      placeholder="Enter quantity"
-                    />
+                    <input type="number" required max={selectedListing.quantity} value={orderQuantity} onChange={e => setOrderQuantity(e.target.value)} className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-all" placeholder="Enter quantity" />
                   </div>
 
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">Payment Method</label>
                     <div className="grid grid-cols-2 gap-3 mb-3">
-                      <div 
-                        onClick={() => setPaymentMethod('telebirr')}
-                        className={`border-2 rounded-xl p-3.5 cursor-pointer flex flex-col items-center gap-2 transition-all ${paymentMethod === 'telebirr' ? 'border-primary-500 bg-primary-50 shadow-sm' : 'border-slate-200 hover:border-slate-300'}`}
-                      >
+                      <div onClick={() => setPaymentMethod('telebirr')} className={`border-2 rounded-xl p-3.5 cursor-pointer flex flex-col items-center gap-2 transition-all ${paymentMethod === 'telebirr' ? 'border-primary-500 bg-primary-50 shadow-sm' : 'border-slate-200 hover:border-slate-300'}`}>
                         <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xs shadow-sm">TB</div>
                         <span className="text-sm font-semibold">Telebirr</span>
                       </div>
-                      <div 
-                        onClick={() => setPaymentMethod('cbe')}
-                        className={`border-2 rounded-xl p-3.5 cursor-pointer flex flex-col items-center gap-2 transition-all ${paymentMethod === 'cbe' ? 'border-primary-500 bg-primary-50 shadow-sm' : 'border-slate-200 hover:border-slate-300'}`}
-                      >
+                      <div onClick={() => setPaymentMethod('cbe')} className={`border-2 rounded-xl p-3.5 cursor-pointer flex flex-col items-center gap-2 transition-all ${paymentMethod === 'cbe' ? 'border-primary-500 bg-primary-50 shadow-sm' : 'border-slate-200 hover:border-slate-300'}`}>
                         <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center text-white font-bold text-xs shadow-sm">CBE</div>
                         <span className="text-sm font-semibold">CBE Birr</span>
                       </div>
                     </div>
-                    <input 
-                      type="text" 
-                      required
-                      value={paymentAccount}
-                      onChange={e => setPaymentAccount(e.target.value)}
-                      placeholder={paymentMethod === 'telebirr' ? 'Enter Telebirr Number (e.g. 0911...)' : 'Enter CBE Account Number'} 
-                      className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-sm text-slate-900 transition-all" 
-                    />
+                    <input type="text" required value={paymentAccount} onChange={e => setPaymentAccount(e.target.value)} placeholder={paymentMethod === 'telebirr' ? 'Enter Telebirr Number (e.g. 0911...)' : 'Enter CBE Account Number'} className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-sm text-slate-900 transition-all" />
                   </div>
 
                   <div className="border-t border-slate-100 pt-5 flex justify-between items-end">
@@ -268,11 +189,7 @@ export default function Marketplace() {
                         {orderQuantity ? (Number(orderQuantity) * selectedListing.pricePerKg).toLocaleString() : 0} <span className="text-lg font-bold text-slate-400">ETB</span>
                       </p>
                     </div>
-                    <button 
-                      type="submit" 
-                      disabled={!orderQuantity || Number(orderQuantity) <= 0 || Number(orderQuantity) > selectedListing.quantity || !paymentAccount.trim()}
-                      className="px-6 py-3.5 bg-gradient-to-r from-primary-600 to-emerald-600 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-primary-500/20 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
-                    >
+                    <button type="submit" disabled={!orderQuantity || Number(orderQuantity) <= 0 || Number(orderQuantity) > selectedListing.quantity || !paymentAccount.trim()} className="px-6 py-3.5 bg-gradient-to-r from-primary-600 to-emerald-600 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-primary-500/20 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
                       Pay Now
                     </button>
                   </div>

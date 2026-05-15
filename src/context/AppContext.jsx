@@ -14,9 +14,12 @@ export const AppProvider = ({ children }) => {
   const [listings, setListings] = useState(() => {
     const saved = localStorage.getItem('agri_listings');
     return saved ? JSON.parse(saved) : [
-      { id: 1, farmerId: 1, farmerName: 'Abebe Bikila', cropType: 'Teff', quantity: 50, pricePerKg: 120, location: 'Oromia', status: 'active', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80' },
-      { id: 2, farmerId: 2, farmerName: 'Tirunesh Dibaba', cropType: 'Coffee', quantity: 20, pricePerKg: 450, location: 'SNNPR', status: 'active', image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=500&q=80' },
-      { id: 3, farmerId: 1, farmerName: 'Abebe Bikila', cropType: 'Wheat', quantity: 100, pricePerKg: 80, location: 'Oromia', status: 'active', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80' }
+      { id: 1, farmerId: 1, farmerName: 'Abebe Bikila', cropType: 'Teff', quantity: 50, pricePerKg: 120, location: 'Oromia', status: 'active', image: 'https://image.pollinations.ai/prompt/Teff%20grain%20harvest%20Ethiopian%20golden%20seeds%20close%20up%20professional%20food%20photography?width=600&height=400&nologo=true' },
+      { id: 2, farmerId: 2, farmerName: 'Tirunesh Dibaba', cropType: 'Coffee', quantity: 20, pricePerKg: 450, location: 'SNNPR', status: 'active', image: 'https://image.pollinations.ai/prompt/Ethiopian%20coffee%20beans%20fresh%20roasted%20close%20up%20professional%20photography?width=600&height=400&nologo=true' },
+      { id: 3, farmerId: 1, farmerName: 'Abebe Bikila', cropType: 'Wheat', quantity: 100, pricePerKg: 80, location: 'Oromia', status: 'active', image: 'https://image.pollinations.ai/prompt/Golden%20wheat%20grain%20harvest%20close%20up%20professional%20food%20photography?width=600&height=400&nologo=true' },
+      { id: 4, farmerId: 3, farmerName: 'Haile Gebrselassie', cropType: 'Maize', quantity: 200, pricePerKg: 65, location: 'Amhara', status: 'active', image: 'https://image.pollinations.ai/prompt/Fresh%20yellow%20maize%20corn%20cobs%20harvest%20professional%20food%20photography?width=600&height=400&nologo=true' },
+      { id: 5, farmerId: 2, farmerName: 'Tirunesh Dibaba', cropType: 'Sorghum', quantity: 150, pricePerKg: 70, location: 'SNNPR', status: 'active', image: 'https://image.pollinations.ai/prompt/Red%20sorghum%20grain%20seeds%20close%20up%20professional%20food%20photography?width=600&height=400&nologo=true' },
+      { id: 6, farmerId: 3, farmerName: 'Haile Gebrselassie', cropType: 'Barley', quantity: 80, pricePerKg: 75, location: 'Amhara', status: 'active', image: 'https://image.pollinations.ai/prompt/Barley%20grain%20seeds%20golden%20harvest%20professional%20food%20photography?width=600&height=400&nologo=true' }
     ];
   });
 

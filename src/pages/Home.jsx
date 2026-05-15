@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShieldCheck, TrendingUp, Users, Sparkles, Brain, ChevronRight, Globe, Package, Star, ArrowUp } from 'lucide-react';
+import { ArrowRight, ShieldCheck, TrendingUp, Users, Sparkles, Brain, Globe, Package, Star, ArrowUp, Leaf, Zap } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 export default function Home() {
@@ -11,18 +11,17 @@ export default function Home() {
   const baseOrderValue = orders.reduce((sum, order) => sum + order.totalPrice, 0) + 450000;
   const totalBirrSaved = Math.floor(baseOrderValue * 0.3);
 
-  // Top Farmers
+  // Top Farmers - using Pollinations AI images
   const topFarmers = [
-    { id: 1, name: 'Abebe Bikila', region: 'Oromia', rating: 4.9, reviews: 124, activeSince: 'Jan 2024', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&q=80' },
-    { id: 2, name: 'Tirunesh Dibaba', region: 'SNNPR', rating: 4.8, reviews: 98, activeSince: 'Feb 2024', image: 'https://images.unsplash.com/photo-1531123897727-8f129e1bf3c4?w=500&q=80' },
-    { id: 3, name: 'Haile Gebrselassie', region: 'Amhara', rating: 4.9, reviews: 156, activeSince: 'Nov 2023', image: 'https://images.unsplash.com/photo-1543807535-eceef0bc6599?w=500&q=80' }
+    { id: 1, name: 'Abebe Bikila', region: 'Oromia', rating: 4.9, reviews: 124, crops: 'Teff, Wheat', activeSince: 'Jan 2024', image: 'https://image.pollinations.ai/prompt/Professional%20portrait%20Ethiopian%20male%20farmer%20smiling%20wearing%20traditional%20clothes%20warm%20lighting%20headshot?width=300&height=300&nologo=true' },
+    { id: 2, name: 'Tirunesh Dibaba', region: 'SNNPR', rating: 4.8, reviews: 98, crops: 'Coffee, Sorghum', activeSince: 'Feb 2024', image: 'https://image.pollinations.ai/prompt/Professional%20portrait%20Ethiopian%20female%20farmer%20smiling%20in%20green%20field%20warm%20lighting%20headshot?width=300&height=300&nologo=true' },
+    { id: 3, name: 'Haile Gebrselassie', region: 'Amhara', rating: 4.9, reviews: 156, crops: 'Maize, Barley', activeSince: 'Nov 2023', image: 'https://image.pollinations.ai/prompt/Professional%20portrait%20Ethiopian%20male%20elder%20farmer%20experienced%20kind%20face%20warm%20lighting%20headshot?width=300&height=300&nologo=true' }
   ];
 
   return (
     <div className="flex flex-col">
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="relative flex items-center pt-24 pb-32 overflow-hidden min-h-[85vh]">
-        {/* Animated background */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-primary-200/40 blur-[120px] mix-blend-multiply float-animation"></div>
           <div className="absolute top-[20%] -right-[10%] w-[40%] h-[60%] rounded-full bg-emerald-200/40 blur-[120px] mix-blend-multiply float-animation" style={{animationDelay: '1.5s'}}></div>
@@ -53,25 +52,15 @@ export default function Home() {
                 Join as Farmer
                 <ArrowRight className="h-5 w-5" />
               </Link>
-              <Link to="/register" className="w-full sm:w-auto px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-2xl font-bold text-lg hover:border-slate-300 hover:bg-slate-50 hover:shadow-lg hover:-translate-y-1 transition-all">
-                I want to buy produce
+              <Link to="/products" className="w-full sm:w-auto px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-2xl font-bold text-lg hover:border-slate-300 hover:bg-slate-50 hover:shadow-lg hover:-translate-y-1 transition-all">
+                Browse Products
               </Link>
             </div>
 
-            {/* Trust badges */}
             <div className="flex flex-wrap items-center justify-center gap-6 pt-8 text-sm text-slate-500">
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-primary-500" />
-                <span>Verified Farmers</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Brain className="h-4 w-4 text-violet-500" />
-                <span>AI-Powered Pricing</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Globe className="h-4 w-4 text-emerald-500" />
-                <span>All Ethiopian Regions</span>
-              </div>
+              <div className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-primary-500" /><span>Verified Farmers</span></div>
+              <div className="flex items-center gap-1.5"><Brain className="h-4 w-4 text-violet-500" /><span>AI-Powered Pricing</span></div>
+              <div className="flex items-center gap-1.5"><Globe className="h-4 w-4 text-emerald-500" /><span>All Ethiopian Regions</span></div>
             </div>
           </div>
         </div>
@@ -88,21 +77,17 @@ export default function Home() {
           
           <div className="grid md:grid-cols-3 gap-6">
             {/* AI Pricing */}
-            <div className="group p-8 rounded-3xl bg-gradient-to-br from-violet-50 to-white border border-violet-100 card-hover relative overflow-hidden">
+            <Link to="/ai" className="group p-8 rounded-3xl bg-gradient-to-br from-violet-50 to-white border border-violet-100 card-hover relative overflow-hidden block">
               <div className="absolute top-0 right-0 w-32 h-32 bg-violet-100/50 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-700"></div>
               <div className="relative z-10">
                 <div className="w-14 h-14 bg-gradient-to-br from-violet-600 to-purple-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/40 transition-shadow">
                   <Sparkles className="h-7 w-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">AI Price Suggestions</h3>
-                <p className="text-slate-600 leading-relaxed">
-                  Our Claude AI engine analyzes region, season, and demand to suggest the fairest price per kg, ensuring you never undersell.
-                </p>
-                <div className="mt-4 inline-flex items-center gap-1 text-violet-600 font-semibold text-sm group-hover:gap-2 transition-all">
-                  Learn more <ChevronRight className="h-4 w-4" />
-                </div>
+                <p className="text-slate-600 leading-relaxed">Our Claude AI engine analyzes region, season, and demand to suggest the fairest price per kg.</p>
+                <div className="mt-4 inline-flex items-center gap-1 text-violet-600 font-semibold text-sm group-hover:gap-2 transition-all">Try AI Assistant <ArrowRight className="h-4 w-4" /></div>
               </div>
-            </div>
+            </Link>
 
             {/* Secure Payments */}
             <div className="group p-8 rounded-3xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 card-hover relative overflow-hidden">
@@ -112,12 +97,8 @@ export default function Home() {
                   <ShieldCheck className="h-7 w-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Secure Payments</h3>
-                <p className="text-slate-600 leading-relaxed">
-                  Direct integration with Telebirr and CBE Birr. Payments go straight to your mobile wallet—no cash, no middlemen.
-                </p>
-                <div className="mt-4 inline-flex items-center gap-1 text-emerald-600 font-semibold text-sm group-hover:gap-2 transition-all">
-                  Learn more <ChevronRight className="h-4 w-4" />
-                </div>
+                <p className="text-slate-600 leading-relaxed">Direct integration with Telebirr and CBE Birr. Payments go straight to your mobile wallet.</p>
+                <div className="mt-4 inline-flex items-center gap-1 text-emerald-600 font-semibold text-sm group-hover:gap-2 transition-all">Secure & instant <ShieldCheck className="h-4 w-4" /></div>
               </div>
             </div>
 
@@ -129,95 +110,88 @@ export default function Home() {
                   <Users className="h-7 w-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Earn with Referrals</h3>
-                <p className="text-slate-600 leading-relaxed">
-                  Invite other farmers to join using your unique code. Earn 50 ETB rewards when they complete their registration.
-                </p>
-                <div className="mt-4 inline-flex items-center gap-1 text-amber-600 font-semibold text-sm group-hover:gap-2 transition-all">
-                  Learn more <ChevronRight className="h-4 w-4" />
-                </div>
+                <p className="text-slate-600 leading-relaxed">Invite farmers using your unique code. Earn 50 ETB rewards per successful referral.</p>
+                <div className="mt-4 inline-flex items-center gap-1 text-amber-600 font-semibold text-sm group-hover:gap-2 transition-all">Start earning <Zap className="h-4 w-4" /></div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════ IMPACT STATS ═══════════════ */}
-      <section id="impact" className="bg-slate-50 py-24 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ═══════════════ OUR IMPACT ═══════════════ */}
+      <section id="impact" className="py-24 border-t border-slate-100 relative overflow-hidden">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[20%] right-0 w-[400px] h-[400px] bg-emerald-100/30 rounded-full blur-[120px]"></div>
+          <div className="absolute bottom-[10%] left-0 w-[300px] h-[300px] bg-blue-100/30 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 font-medium text-sm mb-6">
-              <Sparkles className="h-4 w-4" />
+              <TrendingUp className="h-4 w-4" />
               Real-time Platform Metrics
             </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Our Impact</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Our Impact</h2>
             <p className="text-lg text-slate-600 leading-relaxed">
-              See how AgriGate is transforming the agricultural supply chain in Ethiopia by eliminating middlemen and empowering farmers.
+              Transforming Ethiopia's agricultural supply chain — one farmer at a time.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl border border-blue-100 shadow-sm relative overflow-hidden group hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Users className="h-32 w-32 text-blue-500" />
+          {/* Impact Stats - Clean Professional Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+            {/* Farmers Connected */}
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/30 group-hover:-translate-y-1 transition-all duration-300">
+                <Users className="h-8 w-8 text-white" />
               </div>
-              <div className="relative z-10">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/20">
-                  <Users className="h-6 w-6 text-white" />
-                </div>
-                <div className="flex items-end gap-3 mb-2">
-                  <h3 className="text-5xl font-extrabold text-slate-900">{totalFarmers.toLocaleString()}</h3>
-                  <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg mb-1.5 flex items-center gap-0.5">
-                    <ArrowUp className="h-3 w-3" /> 12%
-                  </span>
-                </div>
-                <p className="text-lg font-semibold text-blue-800">Farmers Connected</p>
-                <p className="text-sm text-blue-600 mt-1">Growing their businesses directly.</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <p className="text-5xl font-extrabold text-slate-900">{totalFarmers.toLocaleString()}</p>
+                <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg flex items-center gap-0.5">
+                  <ArrowUp className="h-3 w-3" /> 12%
+                </span>
               </div>
+              <h3 className="text-lg font-bold text-slate-700 mb-1">Farmers Connected</h3>
+              <p className="text-sm text-slate-500">Growing their businesses directly</p>
             </div>
 
-            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-8 rounded-3xl border border-emerald-100 shadow-sm relative overflow-hidden group hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                <TrendingUp className="h-32 w-32 text-emerald-500" />
+            {/* ETB Saved */}
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/30 group-hover:-translate-y-1 transition-all duration-300">
+                <TrendingUp className="h-8 w-8 text-white" />
               </div>
-              <div className="relative z-10">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20">
-                  <TrendingUp className="h-6 w-6 text-white" />
-                </div>
-                <div className="flex items-end gap-3 mb-2">
-                  <h3 className="text-5xl font-extrabold text-slate-900">{totalBirrSaved.toLocaleString()}</h3>
-                  <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg mb-1.5 flex items-center gap-0.5">
-                    <ArrowUp className="h-3 w-3" /> 28%
-                  </span>
-                </div>
-                <p className="text-lg font-semibold text-emerald-800">ETB Saved</p>
-                <p className="text-sm text-emerald-600 mt-1">Vs traditional Delala prices.</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <p className="text-5xl font-extrabold text-slate-900">{totalBirrSaved.toLocaleString()}</p>
+                <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg flex items-center gap-0.5">
+                  <ArrowUp className="h-3 w-3" /> 28%
+                </span>
               </div>
+              <h3 className="text-lg font-bold text-slate-700 mb-1">ETB Saved</h3>
+              <p className="text-sm text-slate-500">Compared to traditional Delala prices</p>
             </div>
 
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-8 rounded-3xl border border-amber-100 shadow-sm relative overflow-hidden group hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Package className="h-32 w-32 text-amber-500" />
+            {/* Produce Traded */}
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/30 group-hover:-translate-y-1 transition-all duration-300">
+                <Package className="h-8 w-8 text-white" />
               </div>
-              <div className="relative z-10">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-amber-500/20">
-                  <Package className="h-6 w-6 text-white" />
-                </div>
-                <div className="flex items-end gap-3 mb-2">
-                  <h3 className="text-5xl font-extrabold text-slate-900">{totalKgTraded.toLocaleString()}</h3>
-                  <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg mb-1.5 flex items-center gap-0.5">
-                    <ArrowUp className="h-3 w-3" /> 45%
-                  </span>
-                </div>
-                <p className="text-lg font-semibold text-amber-800">Kg of Produce Traded</p>
-                <p className="text-sm text-amber-600 mt-1">Fresh farm-to-table deliveries.</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <p className="text-5xl font-extrabold text-slate-900">{totalKgTraded.toLocaleString()}</p>
+                <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg flex items-center gap-0.5">
+                  <ArrowUp className="h-3 w-3" /> 45%
+                </span>
               </div>
+              <h3 className="text-lg font-bold text-slate-700 mb-1">Kg Traded</h3>
+              <p className="text-sm text-slate-500">Fresh farm-to-table deliveries</p>
             </div>
           </div>
 
-          {/* Top Rated Farmers */}
+          {/* ── Top Rated Farmers ── */}
           <div>
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-4">
               <div>
+                <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-2">Community</p>
                 <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Top Rated Farmers</h2>
                 <p className="text-slate-500 mt-1">Trust is built on quality and consistency.</p>
               </div>
@@ -228,17 +202,33 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {topFarmers.map(farmer => (
-                <div key={farmer.id} className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center">
+              {topFarmers.map((farmer, idx) => (
+                <div key={farmer.id} className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden group">
+                  {/* Rank badge */}
+                  {idx === 0 && (
+                    <div className="absolute top-4 right-4">
+                      <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-sm flex items-center gap-1">
+                        <Star className="h-3 w-3 fill-current" /> #1
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Avatar */}
                   <div className="relative mb-5">
-                    <img src={farmer.image} alt={farmer.name} className="w-24 h-24 rounded-full object-cover ring-4 ring-primary-50" />
-                    <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center border-2 border-white">
+                    <div className="w-24 h-24 rounded-full overflow-hidden ring-4 ring-primary-50 group-hover:ring-primary-100 transition-all">
+                      <img src={farmer.image} alt={farmer.name} className="w-full h-full object-cover" loading="lazy" />
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
                       <ShieldCheck className="h-3.5 w-3.5 text-white" />
                     </div>
                   </div>
+
+                  {/* Info */}
                   <h3 className="text-xl font-bold text-slate-900">{farmer.name}</h3>
-                  <p className="text-slate-500 text-sm mb-4">{farmer.region}</p>
+                  <p className="text-slate-500 text-sm mb-1">{farmer.region}</p>
+                  <p className="text-xs text-primary-600 font-medium mb-4">{farmer.crops}</p>
                   
+                  {/* Rating */}
                   <div className="flex items-center gap-1 mb-2">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="h-5 w-5 text-amber-400 fill-current" />
@@ -247,6 +237,7 @@ export default function Home() {
                   </div>
                   <p className="text-sm text-slate-500 mb-6">Based on {farmer.reviews} reviews</p>
                   
+                  {/* Footer */}
                   <div className="w-full mt-auto pt-4 border-t border-slate-100 text-sm text-slate-500 flex justify-between">
                     <span>Active since</span>
                     <span className="font-semibold text-slate-900">{farmer.activeSince}</span>
@@ -258,7 +249,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════ FOOTER CTA ═══════════════ */}
+      {/* ═══════════════ FINAL CTA ═══════════════ */}
       <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-10 left-10 w-64 h-64 bg-primary-500 rounded-full blur-[120px]"></div>
@@ -267,10 +258,14 @@ export default function Home() {
         <div className="max-w-3xl mx-auto text-center px-4 relative z-10">
           <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Ready to grow your agricultural business?</h2>
           <p className="text-lg text-slate-400 mb-8">Join thousands of Ethiopian farmers and buyers already using AgriGate.</p>
-          <Link to="/register" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-500 to-emerald-500 text-white rounded-2xl font-bold text-lg hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-1 transition-all">
-            Get Started Free
-            <ArrowRight className="h-5 w-5" />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link to="/register" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-500 to-emerald-500 text-white rounded-2xl font-bold text-lg hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-1 transition-all">
+              Get Started Free <ArrowRight className="h-5 w-5" />
+            </Link>
+            <Link to="/products" className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-2xl font-bold text-lg hover:bg-white/20 hover:-translate-y-1 transition-all">
+              View Products <Leaf className="h-5 w-5" />
+            </Link>
+          </div>
         </div>
       </section>
     </div>
