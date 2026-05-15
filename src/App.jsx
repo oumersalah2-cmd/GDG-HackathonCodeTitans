@@ -6,7 +6,6 @@ import Register from './pages/Register';
 import FarmerDashboard from './pages/FarmerDashboard';
 import BuyerDashboard from './pages/BuyerDashboard';
 import Marketplace from './pages/Marketplace';
-import ImpactDashboard from './pages/ImpactDashboard';
 import { useAppContext } from './context/AppContext';
 
 // Protected Route Component
@@ -57,9 +56,6 @@ function App() {
               <BuyerDashboard />
             </ProtectedRoute>
           } />
-
-          {/* Impact Dashboard - Public or Protected depending on requirement, let's say Public for now */}
-          <Route path="/impact" element={<ImpactDashboard />} />
         </Routes>
       </main>
     </div>

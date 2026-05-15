@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import { Phone, Lock } from 'lucide-react';
+import { Phone, Lock, ArrowRight, Sprout } from 'lucide-react';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -41,21 +41,29 @@ export default function Login() {
   return (
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-        <div className="absolute top-40 right-10 w-96 h-96 rounded-full bg-primary-200/50 blur-[80px]"></div>
+        <div className="absolute top-40 right-10 w-[500px] h-[500px] rounded-full bg-primary-200/40 blur-[120px] float-animation"></div>
+        <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-emerald-200/30 blur-[100px] float-animation" style={{animationDelay: '2s'}}></div>
       </div>
 
       <div className="max-w-md w-full relative z-10">
-        <div className="glass p-8 rounded-3xl">
+        <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl border border-white/30 shadow-2xl">
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <div className="bg-gradient-to-br from-primary-500 to-emerald-500 p-3 rounded-2xl shadow-lg shadow-primary-500/20">
+              <Sprout className="h-8 w-8 text-white" />
+            </div>
+          </div>
+          
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-slate-900 mb-2">Welcome Back</h2>
+            <h2 className="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">Welcome Back</h2>
             <p className="text-slate-500">Log in to your AgriGate account</p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-1.5">Phone Number</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                   <Phone className="h-5 w-5" />
                 </div>
                 <input
@@ -63,16 +71,16 @@ export default function Login() {
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-colors"
+                  className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-all"
                   placeholder="0911234567"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                   <Lock className="h-5 w-5" />
                 </div>
                 <input
@@ -80,7 +88,7 @@ export default function Login() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-colors"
+                  className="block w-full pl-11 pr-3 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-slate-50 text-slate-900 transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -88,15 +96,16 @@ export default function Login() {
 
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 hover:shadow-lg hover:-translate-y-0.5 transition-all mt-4"
+              className="w-full py-3.5 px-4 bg-gradient-to-r from-primary-600 to-emerald-600 text-white rounded-xl font-bold text-base hover:shadow-xl hover:shadow-primary-500/20 hover:-translate-y-0.5 transition-all mt-6 flex items-center justify-center gap-2"
             >
               Log In
+              <ArrowRight className="h-5 w-5" />
             </button>
           </form>
 
           <p className="mt-6 text-center text-sm text-slate-500">
             Don't have an account?{' '}
-            <Link to="/register" className="font-semibold text-primary-600 hover:text-primary-700">
+            <Link to="/register" className="font-semibold text-primary-600 hover:text-primary-700 transition-colors">
               Sign up
             </Link>
           </p>
