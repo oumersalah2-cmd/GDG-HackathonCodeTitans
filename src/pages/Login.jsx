@@ -29,7 +29,9 @@ export default function Login() {
         name: 'Demo User',
         phone: phone,
         region: 'Oromia',
-        cropTypes: ['Teff']
+        cropTypes: ['Teff'],
+        referralCode: `FARM-${Math.floor(1000 + Math.random() * 9000)}`,
+        rewards: 0
       };
       login(mockUser);
       navigate(mockUser.role === 'farmer' ? '/farmer' : '/buyer');

@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { Sprout, Store, MapPin, Phone, User, Briefcase, Building, Leaf } from 'lucide-react';
 
 export default function Register() {
   const navigate = useNavigate();
   const { login } = useAppContext();
+  const [searchParams] = useSearchParams();
   
   const [role, setRole] = useState('farmer'); // 'farmer' or 'buyer'
   
@@ -17,8 +18,7 @@ export default function Register() {
   const [region, setRegion] = useState('Oromia');
   const [cropTypes, setCropTypes] = useState('');
   const [referredBy, setReferredBy] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('ref') || '';
+    return searchParams.get('ref') || '';
   });
   
   // Buyer specific
